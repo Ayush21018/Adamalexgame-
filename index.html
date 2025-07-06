@@ -1,0 +1,55 @@
+const gameArea = document.getElementById('gameArea');
+const car = document.getElementById('car');
+let carX = 175;
+let gameSpeed = 5;
+let obstacles = [];
+
+// Listen for arrow key presses
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowLeft' && carX > 0) {
+    carX -= 25;
+    car.style.left = carX + 'px';
+  } else if (e.key === 'ArrowRight' && carX < (400 - 50)) {
+    carX += 25;
+    car.style.left = carX + 'px';
+  }
+});
+
+// Create obstacles at intervals
+function createObstacle() {
+  const obs = document.createElement('div');
+  obs.classList.add('obstacle');
+  obs.style.left = Math.floor(Math.random() * (400 - 50)) + 'px';
+  obs.style.top = '0px';
+  gameArea.appendChild(obs);
+  obstacles.push(obs);
+}
+
+setInterval(createObstacle, 1500);
+
+// Move obstacles and check collisions
+function moveObstacles() {
+  obstacles.forEach((obs, index) => {
+    let top = parseInt(obs.style.top);
+    obs.style.top = (top + gameSpeed) + 'px';
+
+    // Check for collision
+    if (
+      top + 100 >= 600 - 10 && // obstacle bottom reaches car top
+      parseInt(obs.style.left) < carX + 50 &&
+      parseInt(obs.style.left) + 50 > carX
+    ) {
+      alert('Game Over!');
+      window.location.reload();
+    }
+
+    // Remove obstacle if it moves off screen
+    if (top > 600) {
+      obs.remove();
+      obstacles.splice(index, 1);
+    }
+  });
+  requestAnimationFrame(moveObstacles);
+}
+
+moveObstacles();

@@ -1,0 +1,44 @@
+body {
+    font-size: 15pt;
+body {
+  margin: 0;
+  background: #333;
+  overflow: hidden;
+}
+
+.game-container {
+  position: relative;
+  width: 400px;
+  height: 600px;
+  margin: 20px auto;
+  border: 2px solid #fff;
+  background: #444;
+  overflow: hidden;
+}
+
+.road {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 10px;
+  height: 100%;
+  background: repeating-linear-gradient(
+    #fff,
+    #fff 20px,
+    transparent 20px,
+    transparent 40px
+  );
+  transform: translateX(-50%);
+}
+
+.car {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  width: 40px;
+  height: 80px;
+  background: red;
+  border-radius: 4px;
+  transform: translateX(-50%);
+  transition: left 0.1s;
+}
